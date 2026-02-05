@@ -1,4 +1,4 @@
-//da a conocer los indices de las ocurrencias de s en t
+//da a conocer los indices de las ocurrencias de s en t 
 vector<int> rabin_karp(string const& s, string const& t) {
     const int p = 31;
     const int m = 1e9 + 9;
