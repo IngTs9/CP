@@ -1,3 +1,4 @@
+//Se usa para cuando me piden una respuesta en modulo m o que tengo que ir haciendo algo modulado.
 constexpr int MOD = 1e9 + 7;
 
 int64_t binpow(int64_t a, int64_t b, int64_t m) {
