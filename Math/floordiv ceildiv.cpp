@@ -1,3 +1,5 @@
+//ES SOLO PARA REDONDEAR DIVISIONES
+//hacia abajo floor y hacia arriba ceil;
 int64_t floor_div(int64_t a, int64_t b) {
     return a / b - ((a ^ b) < 0 && a % b != 0);
 }
