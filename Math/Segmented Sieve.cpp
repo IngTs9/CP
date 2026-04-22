@@ -1,6 +1,7 @@
-/*
-Math/Sieve.cpp
-*/
+// ESCRIBIR PRIMERO EL METODO SIEVE
+//En ans quedan guardados los numeros primos en un rango
+//En el main llamo a SIEVE, luego a mivector le asigno a SEGMENTED CRIBA
+//pasandole los rangos. ejemplo: (sieve(); vector<int>primos=segmented_criba(l,r);
 
 #define int int64_t
 vector<int> segmented_criba(int l, int r) {
