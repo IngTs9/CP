@@ -25,10 +25,6 @@ void bfs(int u) {
   }
 }
 
-main() {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cout.tie(0);
   int t;
   cin >> t;
   while (t--) {
@@ -45,7 +41,7 @@ main() {
     if (!vis[b])cout << -1 << endl;
     else cout << dist[b] << endl;
     forn(i, n) G[i].clear();
-    fill(all(vis), 0);
+    fill(all(vis), 0); //limpia el vector para usarlo en el siguiente caso
     fill(all(dist), 0);
   }
   return 0;
