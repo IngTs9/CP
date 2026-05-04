@@ -1,71 +1,44 @@
-struct node { int start, end, maxLen; };
+template<typename T>
+struct STree {
+    int n; vector<T> st;
+    T neutro = T(0);
 
-struct STregularBracket {
-    vector<node> seg;
-    int size;
-
-    STregularBracket(string S) {
-        S = "0" + S;
-        size = S.size();
-        seg.resize(4 * size);
-        build(1, 1, size - 1, S);
+    STree(vector<T>& a) {
+        n = sz(a);
+        st.resize(n * 4);
+        build(1, 0, n - 1, a);
     }
 
-    void build(int idx, int s, int e, string& S) {
-        if (s == e) {
-            if (S[s] == '(') seg[idx] = { 1, 0, 0 };
-            else             seg[idx] = { 0, 1, 0 };
+    T oper(T a, T b) { return max(a, b); }
+
+    void build(int v, int tl, int tr, vector<T>& a) {
+        if (tl == tr) {
+            st[v] = a[tl];
             return;
         }
-        int m = (s + e) / 2;
-        build(idx << 1, s, m, S);
-        build(idx << 1 | 1, m + 1, e, S);
-        pull(idx);
+        int tm = (tr + tl) / 2;
+        build(v * 2, tl, tm, a);
+        build(v * 2 + 1, tm + 1, tr, a);
+        st[v] = oper(st[v * 2], st[v * 2 + 1]);
     }
 
-    void pull(int idx) {
-        node& L = seg[idx << 1], & R = seg[idx << 1 | 1], & P = seg[idx];
-        P.start = R.start;
-        P.end = L.end;
-        P.maxLen = L.maxLen + R.maxLen;
-        int pares = min(L.start, R.end);
-        P.maxLen += pares * 2;
-        int dif = L.start - R.end;
-        if (dif > 0) P.start += dif;
-        else         P.end -= dif;
+    T query(int v, int tl, int tr, int l, int r) {
+        if (tl > r || tr < l) return neutro;
+        if (l <= tl && tr <= r) return st[v];
+        int tm = (tl + tr) / 2;
+        return oper(query(v * 2, tl, tm, l, r), query(v * 2 + 1, tm + 1, tr, l, r));
     }
 
-    node query(int idx, int s, int e, int l, int r) {
-        if (l > e || s > r) return { 0, 0, 0 };
-        if (s >= l && e <= r) return seg[idx];
-        int m = (s + e) / 2;
-        node p1 = query(idx << 1, s, m, l, r);
-        node p2 = query(idx << 1 | 1, m + 1, e, l, r);
-        node ans;
-        ans.start = p2.start;
-        ans.end = p1.end;
-        ans.maxLen = p1.maxLen + p2.maxLen;
-        int pares = min(p1.start, p2.end);
-        ans.maxLen += pares * 2;
-        int dif = p1.start - p2.end;
-        if (dif > 0) ans.start += dif;
-        else         ans.end -= dif;
-        return ans;
-    }
-
-    void update(int idx, int s, int e, int pos, char val) {
-        if (s == e) {
-            if (val == '(') seg[idx] = { 1, 0, 0 };
-            else             seg[idx] = { 0, 1, 0 };
+    void upd(int v, int tl, int tr, int pos, T val) {
+        if (tl == tr) {
+            st[v] = val;
             return;
         }
-        int m = (s + e) / 2;
-        if (pos <= m) update(idx << 1, s, m, pos, val);
-        else          update(idx << 1 | 1, m + 1, e, pos, val);
-        pull(idx);
+        int tm = (tr + tl) / 2;
+        if (pos <= tm) upd(v * 2, tl, tm, pos, val);
+        else upd(v * 2 + 1, tm + 1, tr, pos, val);
+        st[v] = oper(st[v * 2], st[v * 2 + 1]);
     }
-
-    // [1, n]
-    node query(int l, int r) { return query(1, 1, size - 1, l, r); }
-    void update(int pos, char val) { update(1, 1, size - 1, pos, val); }
+    void upd(int pos, T val) { upd(1, 0, n - 1, pos, val); }
+    T query(int l, int r) { return query(1, 0, n - 1, l, r); }
 };
