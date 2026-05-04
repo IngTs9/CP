@@ -18,3 +18,12 @@ struct BIT {
         for (; i < sz(ft); i += i & -i) ft[i] += v;
     }
 };
+// Ejemplo de uso 
+vector<int>v(n);
+    BIT<int>bit(n);
+    forn(i,n)cin>>v[i];
+    forn(i,n)bit.upd(i+1, v[i]);
+    while(k--){
+        int l,r;cin>>l>>r;
+        cout<<bit.qry(l,r)<<endl;
+    }
