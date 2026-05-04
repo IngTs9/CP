@@ -31,5 +31,5 @@ template<typename T> struct Bit {
         add(0, l + 1, x), add(0, r + 2, -x);
         add(1, l + 1, -x * l), add(1, r + 2, x * (r + 1));
     }
-}; //ejemplo de uso 
+};
 //Puedes ingresar x en un rago 
