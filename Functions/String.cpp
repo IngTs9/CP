@@ -19,3 +19,4 @@ sort(s.begin(), s.end());
 do {
     cout << s << endl;
 } while (next_permutation(s.begin(), s.end()));
+cin.ignore(numeric_limits<streamsize>::max(), '\n'); //Borra todo lo que queda en esta línea hasta llegar al Enter
